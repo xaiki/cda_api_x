@@ -1,0 +1,39 @@
+{
+  "name": "cda_api_x",
+  "version": "0.0.1",
+  "description": "Web Scraper to provide methods to access cda.gob.ar easier",
+  "author": {
+    "name": "xaiki"
+  },
+  "main": "./cda_api",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/xaiki/cda_api.git"
+  },
+  "dependencies": {
+    "underscore": "latest",
+    "q": "latest",
+    "request": "latest",
+    "cheerio": "latest",
+    "moment": "latest"
+  },
+  "contributors": [
+    {
+      "name": "Eóin Martin",
+      "email": "eoin.martin.3007@gmail.com",
+      "url": "https://github.com/SlashmanX"
+    },
+    {
+      "url": "https://github.com/phenomenz"
+    },
+    {
+      "name": "Niv Sardi",
+      "email": "xaiki@debian.org",
+      "url": "http://github.com/xaiki/"
+    }
+  ],
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/xaiki/cda_api/issues"
+  }
+}
