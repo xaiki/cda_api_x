@@ -68,12 +68,19 @@ function getShowInfo (url, cat, img) {
         });
 
         var ret = {show: title, id: id, img: img, episodes: episodes, category: cat, slug: slug};
-        var hack = entry.html().replace(/<\/?span>/g, '');
-        _.map(hack.match(/<h[34]>([^<]+)<\/h[34]>[\n ]*<p>([^<]+)<\/p>/mg), function (r) {
-            var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3);
-            var key = a[0].toLowerCase();
-            if (key === "actores")
-                a[1] = a[1].split(/,\s*/)
+        /* XXX(xaiki): HACK
+         *
+         * Yeah, this looks ugly, it's because the JS regex doesn't capture
+         * properly, we should be able to do all this in one go. we can
+         * propbably simlpify a tad the first regex. I couldn't really find
+         * documentation on why /g changes behaviour like it does… oh you
+         * mean JS is b0rkd3d? big surprise
+         */
+        var hack =  entry.html().replace(/<\/?span>/g, '');
+        _.map(hack.match(/<h[34]>([^<]+)<\/h[34]>[\n ]*<p>([^<]+)<\/p>/mg),
+        function (r) { var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n
+        ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3); var key =
+        a[0].toLowerCase(); if (key === "actores") a[1] = a[1].split(/,\s*/)
             ret[key] = a[1];
         });
 
