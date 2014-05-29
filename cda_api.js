@@ -78,8 +78,7 @@ function getShowInfo (url, cat, img) {
          */
         var hack =  entry.html().replace(/<\/?span>/g, '');
         _.map(hack.match(/<h[34]>([^<]+)<\/h[34]>[\n ]*<p>([^<]+)<\/p>/mg),
-        function (r) { var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n
-        ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3); var key =
+        function (r) { var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3); var key =
         a[0].toLowerCase(); if (key === "actores") a[1] = a[1].split(/,\s*/)
             ret[key] = a[1];
         });
