@@ -24,7 +24,11 @@ if(typeof(String.prototype.trim) === "undefined")
 }
 
 var pages = {};
-var deferred = {};
+/* XXX(xaiki): HACK
+ *
+ * this is done as a global because passing deferred around * seems to break
+ * them for some reason */
+var deferred = {}; 
 
 function getAllPages (cat, start) {
     if (! pages[cat])
