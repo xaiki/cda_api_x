@@ -13,7 +13,7 @@ var moment  =   require('moment');
 **************************/
 
 var BASE_URL    =   "http://cda.gob.ar";
-var CATEGORIES  = ['micros'];// ['series-unitarios', 'documentales', 'micros', 'igualdad-cultural']; //
+var CATEGORIES  = ['series-unitarios', 'documentales', 'micros', 'igualdad-cultural']; //
 
 if(typeof(String.prototype.trim) === "undefined")
 {
