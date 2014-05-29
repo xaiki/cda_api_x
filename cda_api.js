@@ -14,18 +14,6 @@ var moment  =   require('moment');
 
 var BASE_URL    =   "http://cda.gob.ar";
 var CATEGORIES  = ['micros'];// ['series-unitarios', 'documentales', 'micros', 'igualdad-cultural']; //
-var SHOWLIST    =   "/showlist/";
-var LATEST  =   "/sort/100/";
-var SEARCH  =   "/search/";
-var SHOWS   =   "/shows/";
-
-var eztv_map = [];
-eztv_map['louie'] = 'louie-2010';
-eztv_map['battlestar-galactica'] = 'battlestar-galactica-2003';
-eztv_map['the-killing'] = 'the-killing-us';
-eztv_map['hawaii-five-0-2010'] = 'hawaii-fiveo-2010';
-eztv_map['the-goldbergs'] = 'the-goldbergs-2013';
-eztv_map['vikings-us'] = 'vikings';
 
 if(typeof(String.prototype.trim) === "undefined")
 {
@@ -147,7 +135,7 @@ exports.getAllShows =   function(cb) {
 exports.getAllEpisodes = function (show, cb) {
     if (! show.hasOwnProperty('episodes'))
         return cb ('wrong show object');
-    
+
     var episodes = _.map(show.episodes, function (e) {
         var d   = Q.defer();
 
