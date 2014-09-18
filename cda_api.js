@@ -39,6 +39,29 @@ function flatten (hash) {
     return ret;
 };
 
+function hack_match (entry) {
+    /* XXX(xaiki): HACK
+     *
+     * Yeah, this looks ugly, it's because the JS regex doesn't capture
+     * properly, we should be able to do all this in one go. we can
+     * propbably simlpify a tad the first regex. I couldn't really find
+     * documentation on why /g changes behaviour like it does… oh you
+     * mean JS is b0rkd3d? big surprise
+     */
+
+    var ret = {};
+    var hack =  entry.html().replace(/<\/?span>/g, '');
+    _.map(hack.match(/<h[34]>([^<]+)<\/h[34]>[\n ]*<p>([^<]+)<\/p>/mg),
+          function (r) {
+              var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3);
+              var key = a[0].toLowerCase();
+              if (key === "actores")
+                  a[1] = a[1].split(/,\s*/)
+              ret[key] = a[1];
+          });
+    return ret;
+}
+
 function getAllPages (cat, start) {
     if (! pages[cat])
         pages[cat] = {};
@@ -107,26 +130,7 @@ function getShowInfo (url, cat, img) {
         episodes = flatten(episodes);
 
         var ret = {show: title, id: id, img: img, episodes: episodes, category: cat, slug: slug};
-        /* XXX(xaiki): HACK
-         *
-         * Yeah, this looks ugly, it's because the JS regex doesn't capture
-         * properly, we should be able to do all this in one go. we can
-         * propbably simlpify a tad the first regex. I couldn't really find
-         * documentation on why /g changes behaviour like it does… oh you
-         * mean JS is b0rkd3d? big surprise
-         */
-        var hack =  entry.html().replace(/<\/?span>/g, '');
-        _.map(hack.match(/<h[34]>([^<]+)<\/h[34]>[\n ]*<p>([^<]+)<\/p>/mg),
-              function (r) {
-                  var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3);
-                  var key = a[0].toLowerCase();
-                  if (key === "actores")
-                      a[1] = a[1].split(/,\s*/)
-                  ret[key] = a[1];
-              });
-
-        debug ('returning', ret);
-        return d.resolve(ret);
+        return d.resolve(_.extend(ret, hack_match (entry)));
     })
     return d.promise;
 }
@@ -167,16 +171,7 @@ function getPagedCategory (cat, page) {
             });
 
             var ret = {show:name, id: id, img: img, category: cat, slug: slug, episodes: episodes};
-            var hack =  entry.html().replace(/<\/?span>/g, '');
-            _.map(hack.match(/<h[34]>([^<]+)<\/h[34]>[\n ]*<p>([^<]+)<\/p>/mg),
-                  function (r) {
-                      var a = r.match(/<h[34]>([^<:]+)(?::\s+)?<\/h[34]>[\n ]*<p>\s*([^<]+)\s*<\/p>/m).slice(1, 3);
-                      var key = a[0].toLowerCase();
-                      if (key === "actores")
-                          a[1] = a[1].split(/,\s*/)
-                      ret[key] = a[1];
-                  });
-            return ret;
+            return _.extend(ret, hack_match (entry));
         });
 
         return d.resolve(shows);
