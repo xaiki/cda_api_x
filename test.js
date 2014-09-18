@@ -3,7 +3,7 @@ var _ = require('underscore');
 var cda = require('./cda_api');
 
 var shows = cda.getAllShows(function (err, data) {
-    console.log(data);
+    console.log('shows', data);
     var show = _.findWhere (data, {'id': '1346'});
 
     console.log ('-->', show);
@@ -13,4 +13,4 @@ var shows = cda.getAllShows(function (err, data) {
     })
 });
 
-
+console.log ('out');

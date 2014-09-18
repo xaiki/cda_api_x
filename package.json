@@ -11,11 +11,12 @@
     "url": "http://github.com/xaiki/cda_api.git"
   },
   "dependencies": {
-    "underscore": "latest",
+    "cheerio": "latest",
+    "debug": "^2.0.0",
+    "moment": "latest",
     "q": "latest",
     "request": "latest",
-    "cheerio": "latest",
-    "moment": "latest"
+    "underscore": "latest"
   },
   "contributors": [
     {
